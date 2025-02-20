@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ export const login = async ({ page }) => {
 };
 
 export const logout = async ({ page }) => {
-  await page.getByText(username).click();
+  await page.getByText(username).fisrt().click();
   await page.getByText("Log out").click();
   await expect(page.getByRole("heading")).toContainText("Pick an account");
 };
