@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
+import dotenv from 'dotenv';
 
-const username = process.env.TEST_USERNAME || "";
-const password = process.env.TEST_PASSWORD || "";
+dotenv.config();
+
+const username = process.env.TEST_USERNAME;
+const password = process.env.TEST_PASSWORD;
 
 export const login = async ({ page }) => {
   await page.goto("/");
