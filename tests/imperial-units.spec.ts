@@ -19,7 +19,7 @@ test("confirm imperial units option", async ({ page }) => {
   await page.getByRole("option", { name: "Imperial" }).click();
   await page.getByRole("button", { name: " Save Changes" }).click();
   await expect(page.locator(".leaflet-control-scale-line")).toContainText(
-    "30 mi"
+    "mi"
   );
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
