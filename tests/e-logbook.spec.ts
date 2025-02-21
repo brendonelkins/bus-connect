@@ -5,10 +5,6 @@ test.beforeEach(async ({ page }) => {
   await login({ page });
 });
 
-test.afterEach(async ({ page }) => {
-  await logout({ page });
-});
-
 test("confirm e-logbook table headers", async ({ page }) => {
   await page.locator(".app-trips").click();
   await expect(page.locator("thead")).toContainText("Date");

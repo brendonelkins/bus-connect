@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const username = process.env.TEST_USERNAME;
-const password = process.env.TEST_PASSWORD;
+const username = process.env.TEST_USERNAME || "";
+const password = process.env.TEST_PASSWORD || "";
 
 export const login = async ({ page }) => {
   await page.goto("/");
@@ -19,7 +19,7 @@ export const login = async ({ page }) => {
 };
 
 export const logout = async ({ page }) => {
-  await page.getByText(username).fisrt().click();
+  await page.getByText(username).click();
   await page.getByText("Log out").click();
   await expect(page.getByRole("heading")).toContainText("Pick an account");
 };

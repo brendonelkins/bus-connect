@@ -4,15 +4,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const username = process.env.TEST_USERNAME;
+const username = process.env.TEST_USERNAME || "";
 
 test.beforeEach(async ({ page }) => {
   await login({ page });
 });
-
-// test.afterEach(async ({ page }) => {
-//   await logout({ page });
-// });
 
 test("confirm profile menu options", async ({ page }) => {
   await page.getByText(username).hover();

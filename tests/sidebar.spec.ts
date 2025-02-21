@@ -5,10 +5,6 @@ test.beforeEach(async ({ page }) => {
   await login({ page });
 });
 
-test.afterEach(async ({ page }) => {
-  await logout({ page });
-});
-
 test("confirm sidebar items", async ({ page }) => {
   await expect(page.locator("li:nth-child(1) > a")).toBeVisible();
   await expect(page.locator("li:nth-child(2) > a")).toBeVisible();

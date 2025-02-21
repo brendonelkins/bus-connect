@@ -4,14 +4,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const username = process.env.TEST_USERNAME;
+const username = process.env.TEST_USERNAME || "";
 
 test.beforeEach(async ({ page }) => {
   await login({ page });
-});
-
-test.afterEach(async ({ page }) => {
-  await logout({ page });
 });
 
 test("confirm user settings options", async ({ page }) => {
@@ -45,7 +41,6 @@ test("confirm user settings options", async ({ page }) => {
   );
   await page.getByRole("button", { name: " Edit Data" }).click();
   await expect(page.getByRole("button", { name: "Cancel" })).toBeVisible();
-  //   await expect(page.getByText('CancelSave Changes')).toBeVisible();
   await expect(page.getByText("Save Changes")).toBeVisible();
   await expect(page.getByText("+").first()).toBeVisible();
   await expect(page.getByText("User language:English (US)")).toBeVisible();

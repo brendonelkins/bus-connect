@@ -5,10 +5,6 @@ test.beforeEach(async ({ page }) => {
   await login({ page });
 });
 
-test.afterEach(async ({ page }) => {
-  await logout({ page });
-});
-
 test("confirm live view filter options", async ({ page }) => {
   await expect(
     page
