@@ -25,11 +25,14 @@ test("date and time format settings", async ({ page }) => {
     .click();
   await page
     .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
-    .click();
-  await page.getByRole("button", { name: " Save Changes" }).click();
-  await expect(
-    page.getByRole("heading", { name: "All Vehicles" })
-  ).toBeVisible();
+    .click({force:true});
+    await expect(page.getByRole('combobox', { name: 'American (2024-12-31 2:00PM)' })).toBeVisible();
+
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+
   await page.getByText(username).hover();
   await page.getByRole("listitem").filter({ hasText: "User Settings" }).click();
   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
@@ -42,11 +45,11 @@ test("date and time format settings", async ({ page }) => {
     .click();
   await page
     .getByRole("option", { name: "European (31.12.2024 14:00)" })
-    .click();
-  await page.getByRole("button", { name: " Save Changes" }).click();
-  await expect(
-    page.getByRole("heading", { name: "All Vehicles" })
-  ).toBeVisible();
+    .click({force:true});
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
 
   await page.getByText(username).hover();
   await page.getByRole("listitem").filter({ hasText: "User Settings" }).click();

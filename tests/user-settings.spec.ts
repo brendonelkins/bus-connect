@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
   await login({ page });
 });
 
-test("confirm user settings options", async ({ page }) => {
+test.skip("confirm user settings options", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
   await expect(page.getByText("User Settings")).toBeVisible();

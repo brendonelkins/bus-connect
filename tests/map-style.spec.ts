@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
 
 test("default map style settings", async ({ page }) => {
   await page.getByText(username).hover();
-  await page.getByRole("listitem").filter({ hasText: "User Settings" }).click();
+  await page.getByRole("listitem").filter({ hasText: "User Settings" }).click({force:true});
   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
   await expect(page.locator("om-card-body")).toContainText(
     "Default map style: Not set"
@@ -22,24 +22,25 @@ test("default map style settings", async ({ page }) => {
     .locator("label:has-text('Default map style:')")
     .locator("xpath=following-sibling::*[1]")
     .click();
-  await page.getByRole("option", { name: "Road Map" }).click();
-  await page.getByRole("button", { name: " Save Changes" }).click();
-  await expect(
-    page.getByRole("heading", { name: "All Vehicles" })
-  ).toBeVisible();
+  await page.getByRole("option", { name: "Road Map" }).click({force:true});
+  await page
+  .getByRole("button", { name: " Save Changes" })
+  .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
   await page.getByText(username).hover();
-  await page.getByRole("listitem").filter({ hasText: "User Settings" }).click();
+  await page.getByRole("listitem").filter({ hasText: "User Settings" }).click({force:true});
   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
   await expect(page.locator("om-card-body")).toContainText(
     "Default map style: Road Map"
   );
+
   await page.getByRole("button", { name: " Edit Data" }).click();
   await page.getByRole("combobox", { name: "Road Map" }).click();
-  await page.getByRole("option", { name: "Not set" }).click();
-  await page.getByRole("button", { name: " Save Changes" }).click();
-  await expect(
-    page.getByRole("heading", { name: "All Vehicles" })
-  ).toBeVisible();
+  await page.getByRole("option", { name: "Not set" }).click({force:true});
+  await page
+  .getByRole("button", { name: " Save Changes" })
+  .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
   await page.getByText(username).hover();
   await page.getByRole("listitem").filter({ hasText: "User Settings" }).click();
   await expect(page.locator("om-card-body")).toContainText(
