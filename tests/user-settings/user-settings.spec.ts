@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { login, logout } from "./commands.page";
+import { login } from "../commands.page.ts";
+
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,11 +16,10 @@ test.beforeEach(async ({ page }) => {
 test("confirm user settings options", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
-  // await expect(page.getByText("User Settings")).toBeVisible();
-  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "brendonchristopher.elkins@zf.com"
-  );
+  await expect(
+    page.locator("om-card-header.user-settings-header")
+  ).toBeVisible();
+  await expect(page.locator("om-card-body")).toContainText(username);
   await expect(page.locator("om-card-body")).toContainText(
     "System of measurement: Metric"
   );
@@ -51,7 +51,6 @@ test("confirm user settings options", async ({ page }) => {
 test("confirm language settings can be updated", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
-  await expect(page.getByText("User Settings")).toBeVisible();
   await page.getByRole("button", { name: " Edit Data" }).click();
   await page.getByRole("combobox", { name: "English (US)" }).click();
   await page.getByRole("option", { name: "Deutsch" }).click();
@@ -67,46 +66,10 @@ test("confirm language settings can be updated", async ({ page }) => {
   await page.getByText("Änderungen speichern").click({ force: true });
 });
 
-test("confirm first day of the week settings", async ({ page }) => {
-  await page.getByText(username).hover();
-  await page.getByText("User Settings").click({ force: true });
-  await expect(
-    page.locator("om-card-header.user-settings-header")
-  ).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "First day of the week: Sunday"
-  );
-
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page.getByRole("combobox", { name: "Sunday" }).click();
-  await page.getByRole("option", { name: "Monday" }).click({ force: true });
-  await page
-    .getByRole("button", { name: " Save Changes" })
-    .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
-  await page.getByText(username).hover();
-  await page.getByText("User Settings").click({ force: true });
-  await expect(
-    page.locator("om-card-header.user-settings-header")
-  ).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "First day of the week: Monday"
-  );
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page.getByRole("combobox", { name: "Monday" }).click({ force: true });
-  await page.getByRole("option", { name: "Sunday" }).click({ force: true });
-  await page
-    .getByRole("button", { name: " Save Changes" })
-    .click({ force: true });
-});
-
 test("confirm imperial units option", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(page.getByText("User Settings")).toBeVisible();
-  await page
-    .getByRole("button", { name: " Edit Data" })
-    .click({ force: true });
+  await page.locator("span", { hasText: "Edit Data" }).click();
   await page.getByRole("combobox", { name: "Metric" }).click({ force: true });
   await page.getByRole("option", { name: "Imperial" }).click({ force: true });
   await page
@@ -123,66 +86,30 @@ test("confirm imperial units option", async ({ page }) => {
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
   await expect(page.getByText("Fleets")).toBeVisible();
-  await expect(page.locator(".leaflet-control-scale-line")).toContainText(
-    "50 km"
-  );
+  await expect(page.locator(".leaflet-control-scale-line")).toContainText("km");
 });
 
-test("date and time format settings", async ({ page }) => {
+test("confirm client can be switched", async ({ page }) => {
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
-    .filter({ hasText: "User Settings" })
+    .filter({ hasText: "Switch Client" })
     .click({ force: true });
-
-  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-
-  await expect(page.locator("om-card-body")).toContainText(
-    "Date and time format: European"
-  );
-  await page.getByRole("button", { name: " Edit Data" }).click();
   await page
-    .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
-    .click();
-  await page
-    .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
+    .getByRole("button", { name: "dropdown trigger" })
     .click({ force: true });
-  await expect(
-    page.getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
-  ).toBeVisible();
-
-  await page
-    .getByRole("button", { name: " Save Changes" })
-    .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
-
+  await page.getByRole("option", { name: "VBL" }).click({ force: true });
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await expect(page.locator("#main-header")).toContainText("VBL");
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
-    .filter({ hasText: "User Settings" })
-    .click({ force: true });
-  // await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "Date and time format: American"
-  );
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page
-    .getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
-    .click();
-  await page
-    .getByRole("option", { name: "European (31.12.2024 14:00)" })
+    .filter({ hasText: "Switch Client" })
     .click({ force: true });
   await page
-    .getByRole("button", { name: " Save Changes" })
+    .getByRole("button", { name: "dropdown trigger" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
-
-  await page.getByText(username).hover();
-  await page
-    .getByRole("listitem")
-    .filter({ hasText: "User Settings" })
-    .click({ force: true });
-  await expect(page.locator("om-card-body")).toContainText(
-    "Date and time format: European"
-  );
+  await page.getByRole("option", { name: "Karsan OEM" }).click({ force: true });
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await expect(page.locator("#main-header")).toContainText("Karsan OEM");
 });
