@@ -13,9 +13,7 @@ test.beforeEach(async ({ page }) => {
 test("confirm first day of the week settings", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(
-    page.locator("om-card-header.user-settings-header")
-  ).toBeVisible();
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
   await expect(page.locator("om-card-body")).toContainText(
     "First day of the week: Sunday"
   );
@@ -29,9 +27,7 @@ test("confirm first day of the week settings", async ({ page }) => {
   await expect(page.getByText("Fleets")).toBeVisible();
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(
-    page.locator("om-card-header.user-settings-header")
-  ).toBeVisible();
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
   await expect(page.locator("om-card-body")).toContainText(
     "First day of the week: Monday"
   );

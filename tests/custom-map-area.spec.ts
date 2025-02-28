@@ -18,7 +18,9 @@ test("confirm custom map area can be set", async ({ page }) => {
   await expect(page.locator("om-card-body")).toContainText(
     "Custom map area:Not set"
   );
-  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("button", { name: " Edit Data" })
+    .click({ force: true });
   await page.locator('span:has-text("Not set")').last().click({ force: true });
   await page.getByRole("option", { name: "Specified" }).click();
   await page.getByRole("button", { name: "Zoom in" }).click();
