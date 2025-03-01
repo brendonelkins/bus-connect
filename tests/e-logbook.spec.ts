@@ -4,13 +4,7 @@ test("confirm e-logbook table headers", async ({ page }) => {
   await page.goto("/");
   await page
     .getByRole("listitem")
-    .filter({ hasText: "E-LogbookDriving History," })
-    .getByRole("link")
-    .hover();
-  await page
-    .getByRole("listitem")
-    .filter({ hasText: "E-LogbookDriving History," })
-    .getByRole("link")
+    .locator('nth=1')
     .click();
   await expect(page.locator("thead")).toContainText("Date");
   await expect(page.locator("thead")).toContainText("Start");

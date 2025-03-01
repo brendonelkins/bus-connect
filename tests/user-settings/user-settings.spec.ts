@@ -49,6 +49,84 @@ test("confirm user settings options", async ({ page }) => {
   await expect(page.getByText("User language:English (US)")).toBeVisible();
 });
 
+test("confirm first day of the week settings", async ({ page }) => {
+  await page.goto("/");
+  await page.getByText(username).hover();
+  await page.getByText("User Settings").click({ force: true });
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
+  await expect(page.locator("om-card-body")).toContainText(
+    "First day of the week: Sunday"
+  );
+
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page.getByRole("combobox", { name: "Sunday" }).click();
+  await page.getByRole("option", { name: "Monday" }).click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.getByText(username).hover();
+  await page.getByText("User Settings").click({ force: true });
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
+  await expect(page.locator("om-card-body")).toContainText(
+    "First day of the week: Monday"
+  );
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page.getByRole("combobox", { name: "Monday" }).click({ force: true });
+  await page.getByRole("option", { name: "Sunday" }).click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+});
+
+test("default map style settings", async ({ page }) => {
+  await page.goto("/");
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
+  await expect(page.locator("om-card-body")).toContainText(
+    "Default map style: Not set"
+  );
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .locator("label:has-text('Default map style:')")
+    .locator("xpath=following-sibling::*[1]")
+    .click();
+  await page.getByRole("option", { name: "Road Map" }).click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
+  await expect(page.locator("om-card-body")).toContainText(
+    "Default map style: Road Map"
+  );
+
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page.getByRole("combobox", { name: "Road Map" }).click();
+  await page.getByRole("option", { name: "Not set" }).click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.locator("om-card-body")).toContainText(
+    "Default map style: Not set"
+  );
+});
+
 test("date and time format settings", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();

@@ -5,7 +5,7 @@ dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test("default map style settings", async ({ page }) => {
+test.skip("default map style settings", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();
   await page

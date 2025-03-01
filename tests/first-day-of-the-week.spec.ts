@@ -5,7 +5,7 @@ dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test("confirm first day of the week settings", async ({ page }) => {
+test.skip("confirm first day of the week settings", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
