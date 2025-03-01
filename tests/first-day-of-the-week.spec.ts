@@ -1,16 +1,12 @@
 import { test, expect } from "@playwright/test";
-import { login } from "./commands.page";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test.beforeEach(async ({ page }) => {
-  await login({ page });
-});
-
 test("confirm first day of the week settings", async ({ page }) => {
+  await page.goto("/");
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();

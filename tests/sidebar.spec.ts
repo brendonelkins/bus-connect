@@ -1,11 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { login, logout } from "./commands.page";
-
-test.beforeEach(async ({ page }) => {
-  await login({ page });
-});
 
 test("confirm sidebar items", async ({ page }) => {
+  await page.goto("/");
   await expect(page.locator("li:nth-child(1) > a")).toBeVisible();
   await expect(page.locator("li:nth-child(2) > a")).toBeVisible();
   await expect(page.locator("li:nth-child(3) > a")).toBeVisible();

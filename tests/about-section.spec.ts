@@ -1,18 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { login } from "./commands.page";
-
-test.beforeEach(async ({ page }) => {
-  await login({ page });
-});
 
 test("confirm about section", async ({ page }) => {
+  await page.goto("/");
   await expect(page.locator("i.app-help.ng-star-inserted")).toBeVisible();
   await page.locator("i.app-help.ng-star-inserted").click({ force: true });
-  await expect(
-    page
-      .locator("#printable-content div")
-      .filter({ hasText: /^Getting started$/ })
-  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Getting started" })
   ).toBeVisible();

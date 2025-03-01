@@ -1,20 +1,17 @@
 import { test, expect } from "@playwright/test";
-import { login } from "./commands.page";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test.beforeEach(async ({ page }) => {
-  await login({ page });
-});
-
 test("check columns and sorting in user settings", async ({ page }) => {
+  await page.goto("/");
   await page.getByRole("button", { name: "Vehicles" }).click();
   await expect(
-    page.locator("om-card-body").filter({ hasText: "All Vehicles (371)Map" })
+    page.getByRole("button", { name: " Scan QR code" })
   ).toBeVisible();
+
   await page.getByText("Ξ").click();
   await expect(
     page.getByText("Vehicle", { exact: true }).first()

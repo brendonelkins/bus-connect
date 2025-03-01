@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { login } from "../commands.page.ts";
 
 import dotenv from "dotenv";
+import { beforeEach } from "node:test";
 
 dotenv.config();
 
@@ -10,10 +10,11 @@ test.describe.configure({ mode: "serial" });
 const username = process.env.TEST_USERNAME || "";
 
 test.beforeEach(async ({ page }) => {
-  await login({ page });
+  await page.goto("/");
 });
 
 test("confirm user settings options", async ({ page }) => {
+  await page.goto("/");
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
   await expect(
@@ -48,10 +49,71 @@ test("confirm user settings options", async ({ page }) => {
   await expect(page.getByText("User language:English (US)")).toBeVisible();
 });
 
+test("date and time format settings", async ({ page }) => {
+  await page.goto("/");
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+
+  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
+
+  await expect(page.locator("om-card-body")).toContainText(
+    "Date and time format: European"
+  );
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
+    .click();
+  await page
+    .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
+    .click({ force: true });
+  await expect(
+    page.getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
+  ).toBeVisible();
+
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.locator("om-card-body")).toContainText(
+    "Date and time format: American"
+  );
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
+    .click();
+  await page
+    .getByRole("option", { name: "European (31.12.2024 14:00)" })
+    .click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.locator("om-card-body")).toContainText(
+    "Date and time format: European"
+  );
+});
+
 test("confirm language settings can be updated", async ({ page }) => {
   await page.getByText(username).hover();
   await page.getByText("User Settings").click();
-  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("button", { name: " Edit Data" })
+    .click({ force: true });
   await page.getByRole("combobox", { name: "English (US)" }).click();
   await page.getByRole("option", { name: "Deutsch" }).click();
   await page.getByRole("button", { name: " Save Changes" }).click();
@@ -68,7 +130,7 @@ test("confirm language settings can be updated", async ({ page }) => {
 
 test("confirm imperial units option", async ({ page }) => {
   await page.getByText(username).hover();
-  await page.getByText("User Settings").click({ force: true });
+  await page.locator("i.om-icon-edit").click({ force: true });
   await page.locator("span", { hasText: "Edit Data" }).click();
   await page.getByRole("combobox", { name: "Metric" }).click({ force: true });
   await page.getByRole("option", { name: "Imperial" }).click({ force: true });

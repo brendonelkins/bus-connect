@@ -1,16 +1,12 @@
 import { test, expect } from "@playwright/test";
-import { login, logout } from "./commands.page";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test.beforeEach(async ({ page }) => {
-  await login({ page });
-});
-
 test("default map style settings", async ({ page }) => {
+  await page.goto("/");
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
