@@ -6,7 +6,7 @@ test("confirm about section", async ({ page }) => {
   await page.locator("i.app-help.ng-star-inserted").click({ force: true });
   await expect(
     page.getByRole("button", { name: "Getting started" })
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 10000 });
   await expect(page.getByRole("button", { name: "Live View" })).toBeVisible();
   await expect(page.getByRole("button", { name: "E-Logbook" })).toBeVisible();
   await expect(

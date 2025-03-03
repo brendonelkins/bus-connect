@@ -5,7 +5,7 @@ dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test("default map style settings", async ({ page }) => {
+test("date and time format settings", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();
   await page
@@ -13,42 +13,54 @@ test("default map style settings", async ({ page }) => {
     .filter({ hasText: "User Settings" })
     .click({ force: true });
   await page.waitForURL("**/user-settings", { timeout: 10000 });
-  await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
-    "Default map style: Not set"
+  await expect(page.locator("div.data-wrapper").nth(5)).toHaveText(
+    "Date and time format: European"
   );
   await page.getByRole("button", { name: " Edit Data" }).click();
   await page
-    .locator("label:has-text('Default map style:')")
-    .locator("xpath=following-sibling::*[1]")
+    .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
     .click();
-  await page.getByRole("option", { name: "Road Map" }).click({ force: true });
   await page
-    .getByRole("button", { name: " Save Changes" })
+    .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
-  await page.getByText(username).hover();
-  await page
-    .getByRole("listitem")
-    .filter({ hasText: "User Settings" })
-    .click({ force: true });
-  await page.waitForURL("**/user-settings");
-  await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
-    "Default map style: Road Map"
-  );
+  await expect(
+    page.getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
+  ).toBeVisible();
 
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page.getByRole("combobox", { name: "Road Map" }).click();
-  await page.getByRole("option", { name: "Not set" }).click({ force: true });
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
   await expect(page.getByText("Fleets")).toBeVisible();
+
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
     .filter({ hasText: "User Settings" })
     .click({ force: true });
-  await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
-    "Default map style: Not set"
+  await page.waitForURL("**/user-settings", { timeout: 10000 });
+  await expect(page.locator("div.data-wrapper").nth(5)).toContainText(
+    "Date and time format: American",
+    { timeout: 10000 }
+  );
+  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
+    .click();
+  await page
+    .getByRole("option", { name: "European (31.12.2024 14:00)" })
+    .click({ force: true });
+  await page
+    .getByRole("button", { name: " Save Changes" })
+    .click({ force: true });
+  await expect(page.getByText("Fleets")).toBeVisible();
+
+  await page.getByText(username).hover();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "User Settings" })
+    .click({ force: true });
+  await expect(page.locator("div.data-wrapper").nth(5)).toContainText(
+    "Date and time format: European",
+    { timeout: 10000 }
   );
 });

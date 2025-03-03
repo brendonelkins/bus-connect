@@ -9,8 +9,7 @@ test.skip("confirm custom map area can be set", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-
+  expect(page.url()).toContain("/usersettings");
   await expect(page.locator("om-card-body")).toContainText(
     "Custom map area:Not set"
   );

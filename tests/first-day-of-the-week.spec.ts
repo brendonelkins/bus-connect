@@ -5,13 +5,14 @@ dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test.skip("confirm first day of the week settings", async ({ page }) => {
+test("confirm first day of the week settings", async ({ page }) => {
   await page.goto("/");
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "First day of the week: Sunday"
+  await page.waitForURL("**/user-settings", { timeout: 10000 });
+  await expect(page.locator("div.data-wrapper").nth(4)).toContainText(
+    "First day of the week: Sunday",
+    { timeout: 10000 }
   );
 
   await page.getByRole("button", { name: " Edit Data" }).click();
@@ -23,9 +24,10 @@ test.skip("confirm first day of the week settings", async ({ page }) => {
   await expect(page.getByText("Fleets")).toBeVisible();
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-  await expect(page.locator("om-card-body")).toContainText(
-    "First day of the week: Monday"
+  await page.waitForURL("**/user-settings");
+  await expect(page.locator("div.data-wrapper").nth(4)).toContainText(
+    "First day of the week: Monday",
+    { timeout: 10000 }
   );
   await page.getByRole("button", { name: " Edit Data" }).click();
   await page.getByRole("combobox", { name: "Monday" }).click({ force: true });

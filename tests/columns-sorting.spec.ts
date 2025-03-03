@@ -1,9 +1,4 @@
 import { test, expect } from "@playwright/test";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const username = process.env.TEST_USERNAME || "";
 
 test("check columns and sorting in user settings", async ({ page }) => {
   await page.goto("/");
@@ -29,20 +24,16 @@ test("check columns and sorting in user settings", async ({ page }) => {
   await expect(
     page.getByRole("columnheader", { name: "Mileage" })
   ).toBeVisible();
+
   await page
     .getByRole("columnheader", { name: "Last active" })
     .getByRole("img")
     .click();
-  await page.waitForTimeout(5000);
-  await page.goto("/");
-  await page.getByRole("button", { name: "Vehicles" }).click();
-  await expect(page.locator("i.icon-bus-any").first()).toBeVisible();
+  await page.waitForTimeout(2000);
 
-  const columnValues = await page
+  let columnValues = await page
     .locator("table tbody tr td:nth-child(2)")
     .allTextContents();
-
-  console.log("Raw column values:", columnValues);
 
   const parseDate = (dateStr) => {
     return new Date(
@@ -55,19 +46,27 @@ test("check columns and sorting in user settings", async ({ page }) => {
     );
   };
 
-  const dateValues = columnValues.map(parseDate);
+  let dateValues = columnValues.map(parseDate);
 
-  console.log("Parsed Dates:", dateValues);
-
-  const isSortedAsc = dateValues.every(
+  let isSortedAsc = dateValues.every(
     (val, i, arr) => i === 0 || val >= arr[i - 1]
   );
-  const isSortedDesc = dateValues.every(
+  expect(isSortedAsc).toBeTruthy();
+
+  await page
+    .getByRole("columnheader", { name: "Last active" })
+    .getByRole("img")
+    .click();
+  await page.waitForTimeout(2000);
+
+  columnValues = await page
+    .locator("table tbody tr td:nth-child(2)")
+    .allTextContents();
+
+  dateValues = columnValues.map(parseDate);
+
+  let isSortedDesc = dateValues.every(
     (val, i, arr) => i === 0 || val <= arr[i - 1]
   );
-  console.log(
-    isSortedAsc
-      ? "Column is sorted in ascending order ⬆️"
-      : "Column is sorted in descending order ⬇️"
-  );
+  expect(isSortedDesc).toBeTruthy();
 });
