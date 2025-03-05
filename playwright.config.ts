@@ -52,9 +52,15 @@ export default defineConfig({
       testMatch: "logout.ts",
     },
     {
+      name: "reset-settings",
+      use: { ...devices["Desktop Chrome"], storageState: ".auth/login.json" },
+      testMatch: "reset-settings.ts",
+      dependencies: ["setup"],
+    },
+    {
       name: "bus-connect",
       use: { ...devices["Desktop Chrome"], storageState: ".auth/login.json" },
-      dependencies: ["setup"],
+      dependencies: ["reset-settings"],
     },
 
     // {

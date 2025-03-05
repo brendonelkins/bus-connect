@@ -25,7 +25,7 @@ test("default map style settings", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
@@ -42,7 +42,7 @@ test("default map style settings", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")

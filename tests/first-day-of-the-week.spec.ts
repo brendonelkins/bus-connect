@@ -21,7 +21,7 @@ test("confirm first day of the week settings", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
   await page.waitForURL("**/user-settings");

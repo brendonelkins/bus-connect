@@ -15,7 +15,7 @@ test("confirm imperial units option", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
   await expect(page.locator(".leaflet-control-scale-line")).toContainText(
     "mi",
     { timeout: 10000 }
@@ -28,6 +28,6 @@ test("confirm imperial units option", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await expect(page.getByText("Fleets")).toBeVisible();
+  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
   await expect(page.locator(".leaflet-control-scale-line")).toContainText("km");
 });
