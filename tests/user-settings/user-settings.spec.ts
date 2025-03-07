@@ -48,207 +48,40 @@ test.skip("confirm user settings options", async ({ page }) => {
   await expect(page.getByText("User language:English (US)")).toBeVisible();
 });
 
-// test("confirm first day of the week settings", async ({ page }) => {
-//   await page.goto("/");
-//   await page.getByText(username).hover();
-//   await page.getByText("User Settings").click({ force: true });
-//   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "First day of the week: Sunday"
-//   );
-
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page.getByRole("combobox", { name: "Sunday" }).click();
-//   await page.getByRole("option", { name: "Monday" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-//   await page.getByText(username).hover();
-//   await page.getByText("User Settings").click({ force: true });
-//   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "First day of the week: Monday"
-//   );
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page.getByRole("combobox", { name: "Monday" }).click({ force: true });
-//   await page.getByRole("option", { name: "Sunday" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-// });
-
-// test("default map style settings", async ({ page }) => {
-//   await page.goto("/");
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-//   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Default map style: Not set"
-//   );
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page
-//     .locator("label:has-text('Default map style:')")
-//     .locator("xpath=following-sibling::*[1]")
-//     .click();
-//   await page.getByRole("option", { name: "Road Map" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-//   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Default map style: Road Map"
-//   );
-
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page.getByRole("combobox", { name: "Road Map" }).click();
-//   await page.getByRole("option", { name: "Not set" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Default map style: Not set"
-//   );
-// });
-
-// test("date and time format settings", async ({ page }) => {
-//   await page.goto("/");
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-
-//   await expect(page.getByRole("img", { name: "user-avatar" })).toBeVisible();
-
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Date and time format: European"
-//   );
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page
-//     .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
-//     .click();
-//   await page
-//     .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
-//     .click({ force: true });
-//   await expect(
-//     page.getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
-//   ).toBeVisible();
-
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Date and time format: American"
-//   );
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page
-//     .getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
-//     .click();
-//   await page
-//     .getByRole("option", { name: "European (31.12.2024 14:00)" })
-//     .click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "User Settings" })
-//     .click({ force: true });
-//   await expect(page.locator("om-card-body")).toContainText(
-//     "Date and time format: European"
-//   );
-// });
-
-// test("confirm language settings can be updated", async ({ page }) => {
-//   await page.getByText(username).hover();
-//   await page.getByText("User Settings").click();
-//   await page
-//     .getByRole("button", { name: " Edit Data" })
-//     .click({ force: true });
-//   await page.getByRole("combobox", { name: "English (US)" }).click();
-//   await page.getByRole("option", { name: "Deutsch" }).click();
-//   await page.getByRole("button", { name: " Save Changes" }).click();
-//   await expect(page.locator("dashboard-fleet-detail")).toContainText(
-//     "Alle Fahrzeuge"
-//   );
-//   await page.getByText(username).hover();
-//   await page.getByText("Benutzereinstellungen").click();
-//   await page.getByRole("button", { name: " Daten Bearbeiten" }).click();
-//   await page.getByRole("combobox", { name: "Deutsch" }).click();
-//   await page.getByRole("option", { name: "English (US)" }).click();
-//   await page.getByText("Änderungen speichern").click({ force: true });
-// });
-
-// test("confirm imperial units option", async ({ page }) => {
-//   await page.getByText(username).hover();
-//   await page.locator("i.om-icon-edit").click({ force: true });
-//   await page.locator("span", { hasText: "Edit Data" }).click();
-//   await page.getByRole("combobox", { name: "Metric" }).click({ force: true });
-//   await page.getByRole("option", { name: "Imperial" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-//   await expect(page.locator(".leaflet-control-scale-line")).toContainText("mi");
-//   await page.getByText(username).hover();
-//   await page.getByText("User Settings").click({ force: true });
-//   await page.getByRole("button", { name: " Edit Data" }).click();
-//   await page.getByRole("combobox", { name: "Imperial" }).click({ force: true });
-//   await page.getByRole("option", { name: "Metric" }).click({ force: true });
-//   await page
-//     .getByRole("button", { name: " Save Changes" })
-//     .click({ force: true });
-//   await expect(page.getByText("Fleets")).toBeVisible();
-//   await expect(page.locator(".leaflet-control-scale-line")).toContainText("km");
-// });
-
-// test("confirm client can be switched", async ({ page }) => {
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "Switch Client" })
-//     .click({ force: true });
-//   await page
-//     .getByRole("button", { name: "dropdown trigger" })
-//     .click({ force: true });
-//   await page.getByRole("option", { name: "VBL" }).click({ force: true });
-//   await page.getByRole("button", { name: "Confirm" }).click();
-//   await expect(page.locator("#main-header")).toContainText("VBL");
-//   await page.getByText(username).hover();
-//   await page
-//     .getByRole("listitem")
-//     .filter({ hasText: "Switch Client" })
-//     .click({ force: true });
-//   await page
-//     .getByRole("button", { name: "dropdown trigger" })
-//     .click({ force: true });
-//   await page.getByRole("option", { name: "Karsan OEM" }).click({ force: true });
-//   await page.getByRole("button", { name: "Confirm" }).click();
-//   await expect(page.locator("#main-header")).toContainText("Karsan OEM");
-// });
+test.skip("confirm a client's page cannot be accessed by another client", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByText(username).hover();
+  await page.getByRole("listitem").filter({ hasText: "Switch Client" }).click();
+  await page.getByRole("button", { name: "dropdown trigger" }).click();
+  await page.getByRole("option", { name: "VBL" }).click();
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await page.locator("i.app-custom.ng-star-inserted").click();
+  await page
+    .locator("iframe")
+    .contentFrame()
+    .getByTestId("esri-consent-cancel-btn")
+    .click();
+  await expect(
+    page.locator("iframe").contentFrame().getByTestId("visual-container-repeat")
+  ).toContainText("Events");
+  await page.getByText(username).hover();
+  await page.getByRole("listitem").filter({ hasText: "Switch Client" }).click();
+  await page.getByRole("button", { name: "dropdown trigger" }).click();
+  await page.getByRole("option", { name: "Bus Ostschweiz AG" }).click();
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await page.locator("i.app-custom.ng-star-inserted").click();
+  await expect(
+    page.locator("iframe").contentFrame().getByTestId("visual-container-repeat")
+  ).toHaveCount(0);
+  await page.getByText(username).hover();
+  await page.getByRole("listitem").filter({ hasText: "Switch Client" }).click();
+  await page.getByRole("button", { name: "dropdown trigger" }).click();
+  await page.getByRole("option", { name: "Akia (T)" }).click();
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await page.locator("i.app-custom.ng-star-inserted").click();
+  await expect(
+    page.locator("iframe").contentFrame().getByTestId("visual-container-repeat")
+  ).toHaveCount(0);
+});

@@ -1,27 +1,34 @@
 import { test, expect } from "@playwright/test";
 import dotenv from "dotenv";
+import { clients } from "./fixtures";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
 test("default map style settings", async ({ page }) => {
-  await page.goto("/");
-  await page.getByText(username).hover();
+  await page.goto(`/${clients.akia}/user-settings/edit`);
+
+  const dropdown = page
+    .locator("label")
+    .filter({ hasText: "Default map style" })
+    .locator("xpath=following-sibling::p-dropdown");
+
+  const selectedValue = await dropdown
+    .locator("span.p-dropdown-label")
+    .getAttribute("aria-label");
+
+  if (selectedValue !== "Not set") {
+    await dropdown.locator(".p-dropdown-trigger").click();
+    await page.getByRole("option", { name: "Not set" }).click();
+  }
+
+  await dropdown.locator(".p-dropdown-trigger").click();
   await page
-    .getByRole("listitem")
-    .filter({ hasText: "User Settings" })
+    .getByRole("option", { name: "Road Map" })
+    .last()
     .click({ force: true });
-  await page.waitForURL("**/user-settings", { timeout: 10000 });
-  await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
-    "Default map style: Not set"
-  );
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page
-    .locator("label:has-text('Default map style:')")
-    .locator("xpath=following-sibling::*[1]")
-    .click();
-  await page.getByRole("option", { name: "Road Map" }).click({ force: true });
+
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
@@ -36,9 +43,14 @@ test("default map style settings", async ({ page }) => {
     "Default map style: Road Map"
   );
 
-  await page.getByRole("button", { name: " Edit Data" }).click();
-  await page.getByRole("combobox", { name: "Road Map" }).click();
-  await page.getByRole("option", { name: "Not set" }).click({ force: true });
+  await page
+    .getByRole("button", { name: " Edit Data" })
+    .click({ force: true });
+  await dropdown.locator(".p-dropdown-trigger").click();
+  await page
+    .getByRole("option", { name: "Not set" })
+    .last()
+    .click({ force: true });
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });

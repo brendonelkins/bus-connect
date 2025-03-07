@@ -1,17 +1,34 @@
 import { test, expect } from "@playwright/test";
 import dotenv from "dotenv";
+import { clients } from "./fixtures";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
 test("confirm imperial units option", async ({ page }) => {
-  await page.goto("/");
-  await page.getByText(username).hover();
-  await page.locator("i.om-icon-edit").click({ force: true });
-  await page.locator("span", { hasText: "Edit Data" }).click();
-  await page.getByRole("combobox", { name: "Metric" }).click({ force: true });
-  await page.getByRole("option", { name: "Imperial" }).click({ force: true });
+  await page.goto(`/${clients.akia}/user-settings/edit`);
+
+  const dropdown = page
+    .locator("label")
+    .filter({ hasText: "System of measurement" })
+    .locator("xpath=following-sibling::p-dropdown");
+
+  const selectedValue = await dropdown
+    .locator("span.p-dropdown-label")
+    .getAttribute("aria-label");
+
+  if (selectedValue !== "Metric") {
+    await dropdown.locator(".p-dropdown-trigger").click();
+    await page.getByRole("option", { name: "Metric" }).click();
+  }
+
+  await dropdown.locator(".p-dropdown-trigger").click();
+
+  await page
+    .getByRole("option", { name: "Imperial" })
+    .last()
+    .click({ force: true });
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
@@ -22,7 +39,9 @@ test("confirm imperial units option", async ({ page }) => {
   );
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
-  await page.getByRole("button", { name: " Edit Data" }).click();
+  await page
+    .getByRole("button", { name: " Edit Data" })
+    .click({ force: true });
   await page.getByRole("combobox", { name: "Imperial" }).click({ force: true });
   await page.getByRole("option", { name: "Metric" }).click({ force: true });
   await page
