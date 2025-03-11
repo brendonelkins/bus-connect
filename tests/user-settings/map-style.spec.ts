@@ -1,29 +1,14 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 import dotenv from "dotenv";
-import { clients } from "./fixtures";
 
 dotenv.config();
 
 const username = process.env.TEST_USERNAME || "";
 
-test("default map style settings", async ({ page }) => {
-  await page.goto(`/${clients.akia}/user-settings/edit`);
+test("default map style settings", async ({ page, resetSetting }) => {
+  await resetSetting("akia", "mapStyle");
 
-  const dropdown = page
-    .locator("label")
-    .filter({ hasText: "Default map style" })
-    .locator("xpath=following-sibling::p-dropdown");
-
-  const selectedValue = await dropdown
-    .locator("span.p-dropdown-label")
-    .getAttribute("aria-label");
-
-  if (selectedValue !== "Not set") {
-    await dropdown.locator(".p-dropdown-trigger").click();
-    await page.getByRole("option", { name: "Not set" }).click();
-  }
-
-  await dropdown.locator(".p-dropdown-trigger").click();
+  await page.getByRole("combobox", { name: "Not set" }).first().click();
   await page
     .getByRole("option", { name: "Road Map" })
     .last()
@@ -32,7 +17,7 @@ test("default map style settings", async ({ page }) => {
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
+  await page.waitForURL("**/all-assets-fleet");
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
@@ -46,15 +31,12 @@ test("default map style settings", async ({ page }) => {
   await page
     .getByRole("button", { name: " Edit Data" })
     .click({ force: true });
-  await dropdown.locator(".p-dropdown-trigger").click();
-  await page
-    .getByRole("option", { name: "Not set" })
-    .last()
-    .click({ force: true });
+  await page.getByRole("combobox", { name: "Road Map" }).click();
+  await page.getByRole("option", { name: "Not set" }).click({ force: true });
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
-  await page.waitForURL("**/all-assets-fleet", { timeout: 10000 });
+  await page.waitForURL("**/all-assets-fleet");
   await page.getByText(username).hover();
   await page
     .getByRole("listitem")
