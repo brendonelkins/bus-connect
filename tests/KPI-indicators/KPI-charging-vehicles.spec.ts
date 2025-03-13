@@ -34,5 +34,5 @@ test("confirms the functionality of the charging vehicles KPI", async ({
 
   const chargingVehiclesHeader = Number(headerNumbers[0]);
 
-  await expect(chargingVehiclesHeader).toEqual(kpiNumber);
+  expect(chargingVehiclesHeader).toEqual(kpiNumber);
 });

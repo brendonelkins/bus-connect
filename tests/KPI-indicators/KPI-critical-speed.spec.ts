@@ -33,8 +33,7 @@ test("confirms the functionality of the critical speed KPI", async ({
   const kpiNumber = kpiText?.match(/\d+/)?.[0];
 
   const criticalSpeedHeader = Number(headerNumbers[0]);
-  // const totalVehicleCount = Number(headerNumbers[1]);
   const kpiPercent = Number(kpiNumber);
 
-  await expect(criticalSpeedHeader).toEqual(kpiPercent);
+  expect(criticalSpeedHeader).toEqual(kpiPercent);
 });

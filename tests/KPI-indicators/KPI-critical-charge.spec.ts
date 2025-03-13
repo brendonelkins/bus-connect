@@ -34,5 +34,5 @@ test("confirms the functionality of the critical state of charge KPI", async ({
 
   const criticalChargeHeader = Number(headerNumbers[0]);
 
-  await expect(criticalChargeHeader).toEqual(kpiNumber);
+  expect(criticalChargeHeader).toEqual(kpiNumber);
 });

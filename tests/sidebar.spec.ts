@@ -1,15 +1,19 @@
 import { test, expect } from "@playwright/test";
 
 test("confirm sidebar items", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.locator("li:nth-child(1) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(2) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(3) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(4) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(5) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(6) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(7) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(8) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(9) > a")).toBeVisible();
-  await expect(page.locator("li:nth-child(10) > a")).toBeVisible();
+  await page.goto("/", { waitUntil: "commit" });
+
+  const sidebarMenu = page.locator("#main-menu");
+
+  await expect(sidebarMenu.locator("i.app-dashboard")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-trips")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-consumption")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-driver")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-digitacho")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-inspector")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-signal-history")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-vehicle-health")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-custom")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-admin")).toBeVisible();
+  await expect(sidebarMenu.locator("i.app-help")).toBeVisible();
 });
