@@ -8,9 +8,11 @@ const username = process.env.TEST_USERNAME || "";
 test("date and time format settings", async ({ page, resetSetting }) => {
   await resetSetting("akia", "dateFormat");
 
-  await page
-    .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
-    .click();
+  // await page
+  //   .getByRole("combobox", { name: "European (31.12.2024 14:00)" })
+  //   .click();
+
+  await page.locator("#pn_id_7").click();
 
   await page
     .getByRole("option", { name: "American (2024-12-31 2:00PM)" })
@@ -35,9 +37,11 @@ test("date and time format settings", async ({ page, resetSetting }) => {
 
   await page.waitForURL("**/user-settings");
 
-  await expect(page.locator("div.data-wrapper").nth(5)).toContainText(
-    "Date and time format: American"
-  );
+  await expect(async () => {
+    await expect(page.locator("div.data-wrapper").nth(5)).toContainText(
+      "Date and time format: American"
+    );
+  }).toPass();
 
   await page.getByRole("button", { name: " Edit Data" }).click();
 

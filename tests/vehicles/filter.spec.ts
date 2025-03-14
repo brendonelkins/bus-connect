@@ -5,12 +5,17 @@ test("Confirm vehicle filter", async ({ page }) => {
 
   await page.getByRole("button", { name: "Vehicles" }).click();
 
-  const searchBox = page
+  await page
     .locator("dashboard-fleet-detail")
-    .getByRole("textbox", { name: "Search" });
-  await searchBox.click();
-  await searchBox.fill("asc");
+    .getByRole("textbox", { name: "Search" })
+    .click();
 
-  const matchingRows = page.locator("tbody tr").filter({ hasText: "ASC" });
-  await expect(matchingRows).toHaveCount(1);
+  await page
+    .locator("dashboard-fleet-detail")
+    .getByRole("textbox", { name: "Search" })
+    .fill("A3018");
+
+  await expect(
+    page.locator("tbody tr").filter({ hasText: "A3018" })
+  ).toHaveCount(1);
 });

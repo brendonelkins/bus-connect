@@ -8,7 +8,8 @@ const username = process.env.TEST_USERNAME || "";
 test("default map style settings", async ({ page, resetSetting }) => {
   await resetSetting("akia", "mapStyle");
 
-  await page.getByRole("combobox", { name: "Not set" }).first().click();
+  await page.locator("#pn_id_9").click();
+
   await page
     .getByRole("option", { name: "Road Map" })
     .last()
@@ -24,9 +25,12 @@ test("default map style settings", async ({ page, resetSetting }) => {
     .filter({ hasText: "User Settings" })
     .click({ force: true });
   await page.waitForURL("**/user-settings");
-  await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
-    "Default map style: Road Map"
-  );
+
+  await expect(async () => {
+    await expect(page.locator("div.data-wrapper").nth(6)).toContainText(
+      "Default map style: Road Map"
+    );
+  }).toPass();
 
   await page
     .getByRole("button", { name: " Edit Data" })

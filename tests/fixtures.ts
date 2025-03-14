@@ -50,6 +50,7 @@ const dropdownSettings = {
 export const test = base.extend<{
   resetSetting: (clientName: string, settingType: string) => Promise<void>;
   visitSettings: () => Promise<void>;
+  openMenu: () => Promise<void>;
 }>({
   resetSetting: async ({ page }, use) => {
     await use(async (clientName: string, settingType: string) => {
@@ -80,6 +81,20 @@ export const test = base.extend<{
     });
   },
   visitSettings: async ({ page }, use) => {},
+
+  openMenu: async ({ page }, use) => {
+    await use(async () => {
+      const fleetsPanel = page.locator(".left-collapsible-panel");
+
+      await expect(fleetsPanel).toBeAttached();
+
+      const fleetPanelStyle = await fleetsPanel.getAttribute("style");
+
+      if (fleetPanelStyle !== "visibility: visible;") {
+        await page.locator(".om-icon-arrowhead-forward").click();
+      }
+    });
+  },
 });
 
 export { expect };

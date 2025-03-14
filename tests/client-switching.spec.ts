@@ -26,7 +26,7 @@ test("confirm client can be switched", async ({ page }) => {
   await page
     .getByRole("button", { name: "dropdown trigger" })
     .click({ force: true });
-  await page.getByRole("option", { name: "Karsan OEM" }).click({ force: true });
+  await page.getByRole("option", { name: "Akia (T)" }).click({ force: true });
   await page.getByRole("button", { name: "Confirm" }).click();
-  await expect(page.locator("#main-header")).toContainText("Karsan OEM");
+  await expect(page.locator("#main-header")).toContainText("Akia (T)");
 });

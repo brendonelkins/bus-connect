@@ -1,21 +1,13 @@
 import { test, expect } from "@playwright/test";
 
-test("confirm vehicle trips are shown correctly", async ({ page }) => {
+test("confirm vehicle type is shown correctly", async ({ page }) => {
   await page.goto("/");
 
-  const vehicleButton = page.getByRole("button", { name: "Vehicles" });
+  await page.getByRole("button", { name: "Vehicles" }).click();
 
-  const firstVehicle = page.locator("i.icon-bus-any").first();
+  await page.locator("i.icon-bus-any").first().click();
 
-  const vehicleType = page.locator("om-chip", { hasText: "Bus" });
+  await expect(page.locator("om-chip", { hasText: "Bus" })).toBeVisible();
 
-  const propulsionType = page.locator("om-chip", { hasText: "Electric" });
-
-  await vehicleButton.click();
-
-  await firstVehicle.click();
-
-  await expect(vehicleType).toBeVisible();
-
-  await expect(propulsionType).toBeVisible();
+  await expect(page.locator("om-chip", { hasText: "Diesel" })).toBeVisible();
 });

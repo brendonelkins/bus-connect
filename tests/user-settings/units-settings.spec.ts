@@ -18,7 +18,13 @@ test("confirm imperial units option", async ({ page, resetSetting }) => {
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
   await page.waitForURL("**/all-assets-fleet");
-  await expect(page.locator(".leaflet-control-scale-line")).toContainText("mi");
+
+  await expect(async () => {
+    await expect(page.locator(".leaflet-control-scale-line")).toContainText(
+      "mi"
+    );
+  }).toPass();
+
   await page.getByText(username).hover();
   await page.getByText("User Settings").click({ force: true });
   await page

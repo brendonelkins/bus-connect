@@ -11,12 +11,9 @@ test("confirm first day of the week settings", async ({
 }) => {
   await resetSetting("akia", "weekStart");
 
-  const dropdown = page
-    .locator("label")
-    .filter({ hasText: "First day of the week" })
-    .locator("xpath=following-sibling::p-dropdown");
+  // await page.getByRole("combobox", { name: "Sunday" }).click({ force: true });
 
-  await page.getByRole("combobox", { name: "Sunday" }).click({ force: true });
+  await page.locator("#pn_id_5").click();
 
   await page.getByRole("option", { name: "Monday" }).click({ force: true });
 

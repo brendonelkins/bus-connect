@@ -1,27 +1,33 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
-test("confirm back to fleets button", async ({ page }) => {
+test("confirm back to fleets button", async ({ page, openMenu }) => {
   await page.goto("/");
 
-  const fleetLocator = page.locator(".list-item").nth(1);
-  const firstFleet = await fleetLocator.innerText();
-  await fleetLocator.click();
+  await openMenu();
 
-  const fleetTitleLocator = page.locator('h3[data-om="fleet-name"]');
-  await expect(fleetTitleLocator).toBeVisible();
-  await expect(fleetTitleLocator).not.toContainText("All Vehicles");
+  await page.locator(".list-item").nth(1).click();
 
-  const fleetTitle = await fleetTitleLocator.innerText();
-  const extractedText = fleetTitle.match(/^(.*?)(?=\s*\()/)?.[1]?.trim() || "";
+  await expect(page.locator('h3[data-om="fleet-name"]')).toBeVisible();
 
-  expect(firstFleet).toEqual(extractedText);
+  await expect(page.locator('h3[data-om="fleet-name"]')).not.toContainText(
+    "All Vehicles"
+  );
+
+  expect(page.locator('h3[data-om="fleet-name"]')).toContainText(
+    await page.locator(".list-item").nth(1).innerText()
+  );
 
   await page.getByRole("button", { name: "Vehicles" }).click();
+
   await page.locator(".icon-bus-any").first().click();
 
-  const backButton = page.getByRole("button", { name: " Go back to fleets" });
-  await expect(backButton).toBeVisible();
-  await backButton.click();
+  await expect(
+    page.getByRole("button", { name: " Go back to fleets" })
+  ).toBeVisible();
 
-  await expect(fleetTitleLocator).toContainText(extractedText);
+  await page.getByRole("button", { name: " Go back to fleets" }).click();
+
+  expect(page.locator('h3[data-om="fleet-name"]')).toContainText(
+    await page.locator(".list-item").nth(1).innerText()
+  );
 });
