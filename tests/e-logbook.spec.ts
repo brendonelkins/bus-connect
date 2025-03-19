@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("confirm e-logbook table headers", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("listitem").locator("nth=1").click();
+  await page.getByRole("listitem").locator("nth=1").click({force:true});
   await page.waitForURL("**/logbook/summaries");
 
   const tableHeader = page.locator("thead");

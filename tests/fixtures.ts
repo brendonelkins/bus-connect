@@ -71,12 +71,16 @@ export const test = base.extend<{
           .getByRole("option", {
             name: dropdownSettings[settingType].expectedOption,
           })
-          .click();
+          .click({ force: true });
+        await expect(
+          page.getByRole("button", { name: " Save Changes" })
+        ).not.toHaveClass("p-disabled");
         await page
           .locator('p-button[icon="pi pi-save"]')
           .locator("button")
           .click();
         await page.waitForURL("**/all-assets-fleet");
+        await page.goto(`/${clients[clientName]}/user-settings/edit`);
       }
     });
   },

@@ -11,13 +11,15 @@ test("confirm first day of the week settings", async ({
 }) => {
   await resetSetting("akia", "weekStart");
 
-  // await page.getByRole("combobox", { name: "Sunday" }).click({ force: true });
+  await page.getByRole("combobox", { name: "Sunday" }).click({ force: true });
 
-  await page.locator("#pn_id_5").click();
+  // await page.locator("#pn_id_5").click();
 
   await page.getByRole("option", { name: "Monday" }).click({ force: true });
 
   await expect(page.getByRole("combobox", { name: "Monday" })).toBeVisible();
+
+  await expect(page.getByRole("button", { name: " Save Changes" })).not.toHaveClass('p-disabled')
 
   await page
     .getByRole("button", { name: " Save Changes" })

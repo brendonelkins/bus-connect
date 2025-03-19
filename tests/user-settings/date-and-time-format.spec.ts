@@ -22,6 +22,8 @@ test("date and time format settings", async ({ page, resetSetting }) => {
     page.getByRole("combobox", { name: "American (2024-12-31 2:00PM)" })
   ).toBeVisible();
 
+await expect(page.getByRole("button", { name: " Save Changes" })).not.toHaveClass('p-disabled')
+
   await page
     .getByRole("button", { name: " Save Changes" })
     .click({ force: true });
