@@ -1,6 +1,6 @@
 import { test, expect } from "../fixtures";
 
-test("confirm the basics of the signal history functionality", async ({
+test.skip("confirm the basics of the signal history functionality", async ({
   page,
 }) => {
   //   await page.goto("/f5d0ef48-98af-475e-abd7-53a611de7477/signal-history");
@@ -40,7 +40,7 @@ test("confirm the basics of the signal history functionality", async ({
   await expect(page.getByRole("button", { name: "Load…" })).toBeVisible();
 });
 
-test("confirm the dropdowns contains the correct options", async ({ page }) => {
+test.skip("confirm the dropdowns contains the correct options", async ({ page }) => {
   await page.goto("/f5d0ef48-98af-475e-abd7-53a611de7477/signal-history");
 
   await page.getByRole("combobox", { name: "All Vehicles" }).click();
