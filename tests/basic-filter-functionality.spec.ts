@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import exp from "constants";
 
-test("test", async ({ page }) => {
+test("confirm basic filter functionality", async ({ page }) => {
   await page.goto("/");
   await page.locator("i.app-trips").click();
   await expect(

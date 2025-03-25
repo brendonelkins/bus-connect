@@ -48,6 +48,4 @@ test.skip("confirm the dropdowns contains the correct options", async ({
   const dropDownValues = page.locator(
     'ul[aria-label="Option List"] > p-dropdownitem > li'
   );
-
-  for (const element of await dropDownValues.innerText()) console.log(element);
 });

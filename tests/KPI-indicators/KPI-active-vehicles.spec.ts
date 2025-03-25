@@ -44,9 +44,5 @@ test("confirms the functionality of the total vehicles KPI", async ({
     (activeVehicleCount / totalVehicleCount) * 100
   );
 
-  console.log(headerPercentHigh);
-  console.log(headerPercentLow);
-  console.log(kpiPercent);
-
   expect([headerPercentHigh, headerPercentLow]).toContain(kpiPercent);
 });

@@ -11,9 +11,9 @@ test("confirm time selection", async ({ page }) => {
 
   await page.getByText("4", { exact: true }).first().click();
 
-  const calandarDate = await page.locator("p-calendar input").inputValue();
+  const calandarDate = page.locator("p-calendar input").inputValue();
 
-  const tripDate = await page.locator(".general-data-header ").innerText();
+  const tripDate = page.locator(".general-data-header ").innerText();
 
-  expect(tripDate).toContain(calandarDate);
+  expect(await tripDate).toContain(await calandarDate);
 });
