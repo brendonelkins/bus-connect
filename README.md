@@ -1,20 +1,113 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# ZF Bus Connect Automated Testing
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Installation Guide
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+### Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+### Node Version
+A Node version manager such as [NVM](https://github.com/nvm-sh/nvm) or [FNM](https://github.com/Schniz/fnm) can be used to install and manage different versions of Node.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+### Install npm or pnpm
+You can use either `npm` or `pnpm` as your package manager:
+
+#### Install npm (default with Node.js)
+```sh
+npm install -g npm
+```
+
+#### Install pnpm
+```sh
+npm install -g pnpm
+```
+
+### Install Playwright
+Playwright is required to run automated tests. It can be installed using your preferred package manager:
+
+#### Using npm
+```sh
+npm install -D @playwright/test
+npx playwright install
+```
+
+#### Using pnpm
+```sh
+pnpm add -D @playwright/test
+pnpm exec playwright install
+```
+
+## Running Playwright Tests
+Playwright can be launched in different modes:
+
+#### Run All Tests using npx
+```sh
+npx playwright test
+```
+
+#### Run All Tests using pnpm
+```sh
+pnpm playwright test
+```
+
+### Run a Specific Test File
+
+#### Run a specific test file using npx
+```sh
+npx playwright test path/to/test.spec.ts
+```
+#### Run a specific test file using pnpm
+```sh
+pnpm playwright test path/to/test.spec.ts
+```
+
+### Run in Headed Mode (With UI)
+
+#### Run in headed mode using npx
+```sh
+npx playwright test --headed
+```
+#### Run in headed mode using pnpm
+```sh
+pnpm playwright test --headed
+```
+
+### Run in Debug Mode
+
+#### Run in debug mode using npx
+```sh
+npx playwright test --debug
+```
+#### Run in debug mode using pnpm
+```sh
+pnpm playwright test --debug
+```
+
+### Run with a Specific Browser
+
+#### Run with a specific browser using npx
+```sh
+npx playwright test --project=chromium  # or firefox, webkit
+```
+#### Run with a specific browser using pnpm
+```sh
+pnpm playwright test --project=chromium  # or firefox, webkit
+```
+
+## Configuring Environment Variables
+Set up a `.env` file in the root directory to store credentials securely.
+
+### Example `.env` File
+```ini
+TEST_USERNAME=your_username_here
+TEST_PASSWORD=your_password_here
+```
+
+Ensure you load the environment variables in your Playwright config or test files:
+```js
+require('dotenv').config();
+console.log(process.env.API_KEY);
+```
+
+## Additional Resources
+- [Playwright Documentation](https://playwright.dev/)
+- [dotenv Package](https://www.npmjs.com/package/dotenv)
