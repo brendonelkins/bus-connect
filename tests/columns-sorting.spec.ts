@@ -2,25 +2,43 @@ import { test, expect } from "@playwright/test";
 
 test("check columns and sorting in user settings", async ({ page }) => {
   await page.goto("/");
+
   await page.getByRole("button", { name: "Vehicles" }).click();
+
   await expect(
     page.getByRole("button", { name: " Scan QR code" })
   ).toBeVisible();
 
   await page.getByText("Ξ").click();
+
+  const menuItems = await page.locator('ul[role="listbox"] li').all();
+
+  for (let item of menuItems) {
+    const attributeValue = await item.getAttribute("aria-checked");
+
+    if (!attributeValue || attributeValue === "false") {
+      await item.click();
+    }
+  }
+
   await expect(
     page.getByText("Vehicle", { exact: true }).first()
   ).toBeVisible();
+
   await page.getByText("Ξ").click();
-  await page.getByText("Ξ").click();
+
   await expect(
     page.getByRole("columnheader", { name: "Vehicle" })
   ).toBeVisible();
+
   await expect(
     page.getByRole("columnheader", { name: "Last active" })
   ).toBeVisible();
+
   await expect(page.getByRole("columnheader", { name: "Name" })).toBeVisible();
+
   await expect(page.getByRole("columnheader", { name: "Speed" })).toBeVisible();
+
   await expect(
     page.getByRole("columnheader", { name: "Mileage" })
   ).toBeVisible();
@@ -29,6 +47,7 @@ test("check columns and sorting in user settings", async ({ page }) => {
     .getByRole("columnheader", { name: "Last active" })
     .getByRole("img")
     .click();
+
   await page.waitForTimeout(2000);
 
   let columnValues = await page
@@ -57,6 +76,7 @@ test("check columns and sorting in user settings", async ({ page }) => {
     .getByRole("columnheader", { name: "Last active" })
     .getByRole("img")
     .click();
+
   await page.waitForTimeout(2000);
 
   columnValues = await page
@@ -68,5 +88,6 @@ test("check columns and sorting in user settings", async ({ page }) => {
   let isSortedDesc = dateValues.every(
     (val, i, arr) => i === 0 || val <= arr[i - 1]
   );
+
   expect(isSortedDesc).toBeTruthy();
 });

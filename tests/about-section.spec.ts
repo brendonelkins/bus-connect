@@ -3,13 +3,15 @@ import { test, expect } from "@playwright/test";
 test("confirm about section", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.locator("i.app-help.ng-star-inserted")).toBeVisible();
+  await expect(page.locator("i.app-help")).toBeVisible();
 
-  await page.locator("i.app-help.ng-star-inserted").click({ force: true });
+  await expect(async () => {
+    await page.locator("i.app-help").click();
 
-  await expect(
-    page.getByRole("button", { name: "Getting started" })
-  ).toBeVisible({ timeout: 10000 });
+    await expect(
+      page.getByRole("button", { name: "Getting started" })
+    ).toBeVisible();
+  }).toPass();
 
   await expect(page.getByRole("button", { name: "Live View" })).toBeVisible();
 

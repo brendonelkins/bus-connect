@@ -1,12 +1,16 @@
-import { table } from "console";
 import { test, expect } from "../fixtures";
 
-test("confirm all vehicles fleet contains all vehicles", async ({ page }) => {
+test("confirm all vehicles fleet contains all vehicles", async ({
+  page,
+  openMenu,
+}) => {
   await page.goto("/");
 
   await expect(page.locator('h3[data-om="fleet-name"]')).toContainText(
     "All Vehicles"
   );
+
+  await openMenu();
 
   await expect(
     page.locator('.item-content:has-text("All vehicles")')

@@ -3,8 +3,6 @@ import { test, expect } from "../fixtures";
 test.skip("confirm the basics of the signal history functionality", async ({
   page,
 }) => {
-  //   await page.goto("/f5d0ef48-98af-475e-abd7-53a611de7477/signal-history");
-
   await page.goto("/");
 
   await expect(page.locator("i.app-signal-history")).toBeVisible();
@@ -40,13 +38,16 @@ test.skip("confirm the basics of the signal history functionality", async ({
   await expect(page.getByRole("button", { name: "Load…" })).toBeVisible();
 });
 
-test.skip("confirm the dropdowns contains the correct options", async ({ page }) => {
-  await page.goto("/f5d0ef48-98af-475e-abd7-53a611de7477/signal-history");
+test.skip("confirm the dropdowns contains the correct options", async ({
+  page,
+}) => {
+  await page.goto("/signal-history");
 
   await page.getByRole("combobox", { name: "All Vehicles" }).click();
 
-const dropDownValues = page.locator('ul[aria-label="Option List"] > p-dropdownitem > li')
+  const dropDownValues = page.locator(
+    'ul[aria-label="Option List"] > p-dropdownitem > li'
+  );
 
-for(const element of await dropDownValues.innerText())
-    console.log(element)
+  for (const element of await dropDownValues.innerText()) console.log(element);
 });

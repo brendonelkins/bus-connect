@@ -1,7 +1,9 @@
 import { test, expect } from "../fixtures";
 
 test("confirm back to fleets button", async ({ page, openMenu }) => {
-  await page.goto("/");
+  await page.goto(
+    "https://dev.zfbusconnect.com/aa7cad56-a659-4834-9d33-0e326b66df5f"
+  );
 
   await openMenu();
 

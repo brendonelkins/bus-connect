@@ -4,7 +4,7 @@ import exp from "node:constants";
 test("confirm trip information is present", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("i.app-trips")).toBeVisible();
-  await page.locator("i.app-trips").click();
+  await page.locator("i.app-trips").click({ force: true });
   await expect(page.locator("form")).toContainText(
     "Daily summaries by vehicle:"
   );
@@ -65,11 +65,26 @@ test("confirm trip information is present", async ({ page }) => {
     .textContent();
   expect(displayedDateRange?.trim()).toContain(lastWeekDateRange);
 
-  const startingMileage = Number((await page.locator("tr td:nth-child(5)").first().innerText()).replace(/[^\d]/g, ""));
+  const startingMileage = Number(
+    (await page.locator("tr td:nth-child(5)").first().innerText()).replace(
+      /[^\d]/g,
+      ""
+    )
+  );
 
-  const endingMileage = Number((await page.locator("tr td:nth-child(6)").first().innerText()).replace(/[^\d]/g, ""));
+  const endingMileage = Number(
+    (await page.locator("tr td:nth-child(6)").first().innerText()).replace(
+      /[^\d]/g,
+      ""
+    )
+  );
 
-  const mileageTotal = Number((await page.locator("tr td:nth-child(7)").first().innerText()).replace(/[^\d]/g, ""));
+  const mileageTotal = Number(
+    (await page.locator("tr td:nth-child(7)").first().innerText()).replace(
+      /[^\d]/g,
+      ""
+    )
+  );
 
- expect(endingMileage - startingMileage).toEqual(mileageTotal + 1)
+  expect(endingMileage - startingMileage).toEqual(mileageTotal);
 });

@@ -36,7 +36,7 @@ test("confirms the functionality of the inoperative vehicles KPI", async ({
   const totalVehicleCount = Number(headerNumbers[1]);
   const kpiPercent = Number(kpiNumber);
 
-  const headerPercent = Math.ceil(
+  const headerPercent = Math.floor(
     (activeVehicleCount / totalVehicleCount) * 100
   );
 

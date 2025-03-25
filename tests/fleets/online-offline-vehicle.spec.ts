@@ -1,7 +1,9 @@
-import exp from "constants";
 import { test, expect } from "../fixtures";
 
-test("confirm online and offline vehicles are shown correctly", async ({ page, openMenu }) => {
+test("confirm online and offline vehicles are shown correctly", async ({
+  page,
+  openMenu,
+}) => {
   await page.goto("/");
 
   await openMenu();

@@ -33,7 +33,8 @@ export default defineConfig({
     video: "on-first-retry",
     screenshot: "only-on-failure",
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://dev.zfbusconnect.com/",
+    baseURL:
+      "https://dev.zfbusconnect.com/f5d0ef48-98af-475e-abd7-53a611de7477",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
