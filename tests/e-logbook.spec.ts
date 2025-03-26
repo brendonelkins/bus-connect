@@ -2,9 +2,8 @@ import { test, expect } from "@playwright/test";
 
 test("confirm e-logbook table headers", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("listitem").locator("nth=1").click({ force: true });
+  await page.locator("i.app-trips").click();
   await page.waitForURL("**/logbook/summaries");
-
   const tableHeader = page.locator("thead");
   await expect(tableHeader).toContainText("Date");
   await expect(tableHeader).toContainText("Start");
@@ -19,6 +18,9 @@ test("confirm trip summary for combustion vehicle", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("i.app-trips")).toBeVisible();
   await page.locator("i.app-trips").click();
+
+  await expect(page.locator("form")).toBeVisible();
+
   await expect(page.locator("form")).toContainText(
     "Daily summaries by vehicle:"
   );
@@ -41,6 +43,9 @@ test("confirm trip summary for electric vehicle", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("i.app-trips")).toBeVisible();
   await page.locator("i.app-trips").click();
+
+  await expect(page.locator("form")).toBeVisible();
+
   await expect(page.locator("form")).toContainText(
     "Daily summaries by vehicle:"
   );

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("test", async ({ page }) => {
+test("confirm map zoom", async ({ page }) => {
   await page.goto("/");
 
   await page.locator("i.app-trips").click();

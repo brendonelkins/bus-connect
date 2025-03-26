@@ -4,12 +4,15 @@ import exp from "constants";
 test("confirm basic filter functionality", async ({ page }) => {
   await page.goto("/");
   await page.locator("i.app-trips").click();
+
   await expect(
-    page.getByRole("combobox", { name: "All Vehicles" })
+    page.locator('p-dropdown[formcontrolname="fleetId"]')
   ).toBeVisible();
+
   await expect(
-    page.getByRole("combobox", { name: "A3001_VCU_5055" })
+    page.locator('p-dropdown[formcontrolname="assetId"]')
   ).toBeVisible();
+
   await expect(page.getByRole("button", { name: "Choose Date" })).toBeVisible();
   await page.getByText("Ξ").click();
   await expect(page.getByLabel("Option List").getByText("Date")).toBeVisible();
@@ -45,6 +48,8 @@ test("confirm basic filter functionality", async ({ page }) => {
   await page.locator('p-dropdown[data-om="fld-fleet-id"]').click();
 
   await page.locator('p-dropdown[data-om="fld-asset-id"]').click();
+
+  await expect(page.locator(".p-dropdown-panel")).toHaveCount(1);
 
   await expect(page.locator(".p-dropdown-panel")).toBeVisible();
 

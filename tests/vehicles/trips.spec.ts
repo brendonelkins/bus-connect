@@ -4,7 +4,8 @@ import exp from "node:constants";
 test("confirm trip information is present", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("i.app-trips")).toBeVisible();
-  await page.locator("i.app-trips").click({ force: true });
+  await page.locator("i.app-trips").click();
+  await expect(page.locator("form")).toBeVisible();
   await expect(page.locator("form")).toContainText(
     "Daily summaries by vehicle:"
   );

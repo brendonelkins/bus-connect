@@ -19,7 +19,7 @@ test("confirm all vehicles fleet contains all vehicles", async ({
   await page.locator('.item-content:has-text("All vehicles")').click();
 
   await expect(
-    page.locator(".leaflet-marker-icon.cluster-marker")
+    page.locator(".leaflet-marker-icon.cluster-marker").first()
   ).toBeVisible();
 
   await expect(page.getByRole("button", { name: "Vehicles" })).toBeVisible();

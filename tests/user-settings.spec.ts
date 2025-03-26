@@ -9,8 +9,6 @@ test("confirms user settings can be updated", async ({
   page,
   resetSetting,
 }) => {
-  //   await resetSetting("akia", "dateFormat");
-  //   await resetSetting("akia", "weekStart");
   await page.goto("/");
 
   await page.getByText(username).hover();
